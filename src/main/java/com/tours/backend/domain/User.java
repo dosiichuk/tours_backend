@@ -1,0 +1,40 @@
+package com.tours.backend.domain;
+
+
+import java.util.Set;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@NoArgsConstructor
+@Getter
+@Setter
+public class User {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String email;
+    private String password;
+    private String firstName;
+    private String lastName;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private Set<Review> reviews;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    public User(String email, String password, String firstName, String lastName, Role role) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+    }
+}
