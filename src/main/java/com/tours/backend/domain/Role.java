@@ -1,6 +1,8 @@
 package com.tours.backend.domain;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,11 +19,13 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @OneToMany(mappedBy = "role")
     private Set<User> users;
 
+    
     public Role(UserRole role) {
         this.role = role;
     }

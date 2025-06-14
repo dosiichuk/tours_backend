@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,59 +16,61 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tours.backend.controller.exceptions.UserAlreadyExistsException;
+import com.tours.backend.controller.exceptions.UserNotFoundException;
 import com.tours.backend.domain.User;
+import com.tours.backend.domain.dtos.NewUserDto;
+import com.tours.backend.domain.dtos.UserDto;
+import com.tours.backend.mapper.UserMapper;
+import com.tours.backend.services.UserService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.http.MediaType;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-    private final Map<Long, User> users = new HashMap<>();
-    private long idCounter = 1;
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return new ArrayList<>(users.values());
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(userMapper.mapToDtoList(users));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        User user = users.get(id);
-        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+    public ResponseEntity<UserDto> getUser(@PathVariable Long id) throws UserNotFoundException {
+        User user =  userService.getUserById(id);
+        return ResponseEntity.ok(userMapper.mapToDto(user));
     }
 
-    @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-        user.setId(idCounter++);
-        users.put(user.getId(), user);
-        return user;
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDto> registerUser(@RequestBody NewUserDto newUser) throws UserAlreadyExistsException {
+
+        User createdUser = userService.createUser(userMapper.mapNewUserDtoToUserEntity(newUser));
+        return ResponseEntity.ok(userMapper.mapToDto(createdUser));
     }
+    
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
-        return users.values().stream()
-                .anyMatch(u -> u.getEmail().equals(email) && u.getPassword().equals(password))
-                ? ResponseEntity.ok("Login successful")
-                : ResponseEntity.status(401).body("Invalid credentials");
+        return ResponseEntity.ok("Login successful for user: " + email);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        User user = users.get(id);
-        if (user == null) return ResponseEntity.notFound().build();
-        user.setFirstName(updatedUser.getFirstName());
-        user.setLastName(updatedUser.getLastName());
-        user.setEmail(updatedUser.getEmail());
-        user.setPassword(updatedUser.getPassword());
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserDto> editUser(@PathVariable Long id, @RequestBody User updatedUser) throws UserNotFoundException {
+        User user = userService.updateUser(id, updatedUser);
+        return ResponseEntity.ok(userMapper.mapToDto(user));
     }
 
-    @PostMapping("/{id}/deactivate")
-    public ResponseEntity<String> deactivateUser(@PathVariable Long id) {
-        User user = users.get(id);
-        if (user == null) return ResponseEntity.notFound().build();
-        users.remove(id);
-        return ResponseEntity.ok("User deactivated");
+    @DeleteMapping("/{id}/deactivate")
+    public ResponseEntity<Void> deactivateUser(@PathVariable Long id)  throws UserNotFoundException {
+        userService.deleteUser(id);
+        return  ResponseEntity.noContent().build();
     }
 }
