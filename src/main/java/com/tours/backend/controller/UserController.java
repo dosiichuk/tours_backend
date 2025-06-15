@@ -1,9 +1,6 @@
 package com.tours.backend.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.RequestBody;
 import com.tours.backend.controller.exceptions.UserAlreadyExistsException;
 import com.tours.backend.controller.exceptions.UserNotFoundException;
 import com.tours.backend.domain.User;
@@ -24,7 +20,6 @@ import com.tours.backend.domain.dtos.UserDto;
 import com.tours.backend.mapper.UserMapper;
 import com.tours.backend.services.UserService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.http.MediaType;
 
 @RestController
@@ -51,24 +46,25 @@ public class UserController {
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> registerUser(@RequestBody NewUserDto newUser) throws UserAlreadyExistsException {
-
+        System.out.println("Registering new user: " + newUser);
         User createdUser = userService.createUser(userMapper.mapNewUserDtoToUserEntity(newUser));
+        System.out.println("Created user: " + createdUser);
         return ResponseEntity.ok(userMapper.mapToDto(createdUser));
     }
     
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
-        return ResponseEntity.ok("Login successful for user: " + email);
+    public ResponseEntity<String> login() {
+        return ResponseEntity.ok("Login successful for user: ");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> editUser(@PathVariable Long id, @RequestBody User updatedUser) throws UserNotFoundException {
-        User user = userService.updateUser(id, updatedUser);
+    public ResponseEntity<UserDto> editUser(@PathVariable Long id, @RequestBody UserDto updatedUser) throws UserNotFoundException {
+        User user = userService.updateUser(id,  userMapper.mapToEntity(updatedUser));
         return ResponseEntity.ok(userMapper.mapToDto(user));
     }
 
-    @DeleteMapping("/{id}/deactivate")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deactivateUser(@PathVariable Long id)  throws UserNotFoundException {
         userService.deleteUser(id);
         return  ResponseEntity.noContent().build();

@@ -21,6 +21,7 @@ public class UserService {
         if (existingUser != null) {
             throw new UserAlreadyExistsException("User with email " + user.getEmail() + " already exists.");
         }
+        
         return userRepository.save(user);
     }
 

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.tours.backend.domain.Role;
 import com.tours.backend.domain.User;
-import com.tours.backend.domain.UserRole;
 import com.tours.backend.domain.dtos.NewUserDto;
 import com.tours.backend.domain.dtos.UserDto;
 
@@ -23,7 +22,7 @@ public class UserMapper {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setEmail(user.getEmail());
-        userDto.setRole(user.getRole().getRole().getRoleString());
+        userDto.setRole(user.getRole().getRole());
 
         return userDto;
     }
@@ -37,9 +36,7 @@ public class UserMapper {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
-        UserRole userRole = UserRole.fromString(userDto.getRole());
-        Role role = new Role(userRole);
-        user.setRole(role);
+        user.setRole(Role.fromString(userDto.getRole()));
 
         return user;
     }
@@ -72,8 +69,7 @@ public class UserMapper {
         user.setLastName(newUserDto.getLastName());
         user.setPassword(newUserDto.getPassword());
         if (newUserDto.getRole() != null) {
-            UserRole userRole = UserRole.fromString(newUserDto.getRole());
-            user.setRole(new Role(userRole));
+            user.setRole(Role.fromString(newUserDto.getRole()));
         }
         return user;
     }

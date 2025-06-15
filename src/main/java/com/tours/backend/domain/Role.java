@@ -1,32 +1,25 @@
 package com.tours.backend.domain;
 
-import jakarta.persistence.*;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+public enum Role {
+    ADMIN("ADMIN"),
+    USER("USER");
 
-import java.util.Set;
-
-@Entity
-@NoArgsConstructor
-@Getter
-@Setter
-public class Role {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
-
-    @OneToMany(mappedBy = "role")
-    private Set<User> users;
-
-    
-    public Role(UserRole role) {
+    private final String role;
+    Role(String role) {
         this.role = role;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public static Role fromString(String role) {
+        for (Role r : Role.values()) {
+            if (r.role.equalsIgnoreCase(role)) {
+                return r;
+            }
+        }
+        throw new IllegalArgumentException("No constant with text " + role + " found");
+    }
+
 }
