@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.tours.backend.controller.exceptions.TripNotFoundException;
 import com.tours.backend.controller.exceptions.UserAlreadyExistsException;
 import com.tours.backend.controller.exceptions.UserNotFoundException;
 
@@ -19,6 +20,10 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>("User with a given email already exists", HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleTripNotFoundException(TripNotFoundException exception) {
+        return new ResponseEntity<>("Trip with a given ID not found", HttpStatus.NOT_FOUND);
+    }
 
 
 }
