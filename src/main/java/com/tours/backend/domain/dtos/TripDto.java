@@ -1,7 +1,6 @@
 package com.tours.backend.domain.dtos;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 import lombok.Data;
 
