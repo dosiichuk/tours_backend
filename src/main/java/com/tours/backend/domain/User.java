@@ -23,11 +23,11 @@ public class User {
     private String firstName;
     private String lastName;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private Set<Review> reviews;
-
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private Set<Review> reviews;
 
     public User(String email, String password, String firstName, String lastName, Role role) {
         this.email = email;

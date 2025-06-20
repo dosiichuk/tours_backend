@@ -1,23 +1,22 @@
 
-SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS review;
-DROP TABLE IF EXISTS flight;
-DROP TABLE IF EXISTS reservation;
-DROP TABLE IF EXISTS hotel_trip;
-DROP TABLE IF EXISTS trip;
-DROP TABLE IF EXISTS hotel_amenity;
-DROP TABLE IF EXISTS hotel;
-DROP TABLE IF EXISTS location;
-DROP TABLE IF EXISTS weather;
-DROP TABLE IF EXISTS amenity;
-DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS role;
-SET FOREIGN_KEY_CHECKS = 1;
+-- SET FOREIGN_KEY_CHECKS = 0;
+-- TRUNCATE TABLE review;
+-- TRUNCATE TABLE flight;
+-- TRUNCATE TABLE reservation;
+-- TRUNCATE TABLE hotel_trip;
+-- TRUNCATE TABLE trip;
+-- TRUNCATE TABLE hotel_amenity;
+-- TRUNCATE TABLE hotel;
+-- TRUNCATE TABLE location;
+-- TRUNCATE TABLE weather;
+-- TRUNCATE TABLE amenity;
+-- TRUNCATE TABLE user;
+-- SET FOREIGN_KEY_CHECKS = 1;
 
 -- Users
-INSERT INTO user (email, password, first_name, last_name, role) VALUES ('admin@example.com', 'adminpass', 'Admin', 'User', 'ADMIN');
-INSERT INTO user (email, password, first_name, last_name, role) VALUES ('user@example.com', 'userpass', 'Regular', 'User', 'USER');
-INSERT INTO user (email, password, first_name, last_name, role) VALUES ('manager@example.com', 'managerpass', 'Manager', 'Boss', 'USER');
+INSERT INTO `user` (email, password, first_name, last_name, role) VALUES ('admin@example.com', 'adminpass', 'Admin', 'User', 'ADMIN');
+INSERT INTO `user` (email, password, first_name, last_name, role) VALUES ('user@example.com', 'userpass', 'Regular', 'User', 'USER');
+INSERT INTO `user` (email, password, first_name, last_name, role) VALUES ('manager@example.com', 'managerpass', 'Manager', 'Boss', 'USER');
 
 -- Amenities
 INSERT INTO amenity (name, description) VALUES ('WiFi', 'Free wireless internet');

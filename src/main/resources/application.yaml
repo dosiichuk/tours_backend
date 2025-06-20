@@ -1,9 +1,18 @@
 spring:
+  application:
+    name: ""
   datasource:
-    url: 'jdbc:mysql://localhost:3306/kodilla_project?allowPublicKeyRetrieval=true&useSSL=false'
+    url: jdbc:mysql://localhost:3306/kodilla_project?allowPublicKeyRetrieval=true&useSSL=false
     username: kodilla_user
     password: kodilla_password
   jpa:
+    defer-datasource-initialization: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
+
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+  sql:
+    init:
+      mode: always
