@@ -23,7 +23,7 @@ public class HotTripsEmailScheduler {
     private final UserService userService;
     private final TripService tripService;
 
-
+    // @Scheduled(fixedRate = 10000)
     @Scheduled(cron = "0 0 9 * * ?")
     public void sendHotTripsEmail() {
         List<Trip> hotTrips = tripService.getTripsBelowASpecificPrice(700.0);
