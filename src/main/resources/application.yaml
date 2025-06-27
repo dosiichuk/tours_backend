@@ -1,4 +1,15 @@
 spring:
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: d5147a2c13f3a2
+    password: c03bc7cb65696a
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   application:
     name: ""
   datasource:
@@ -23,3 +34,8 @@ weather:
     url:
       current: https://api.weatherapi.com/v1/current.json
       forecast: https://api.weatherapi.com/v1/forecast.json
+
+frankfurter:
+  api:
+    url: https://api.frankfurter.dev/v1/latest
+  

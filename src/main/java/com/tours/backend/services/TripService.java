@@ -44,4 +44,8 @@ public class TripService {
         Trip trip = getTripById(id);
         tripRepository.delete(trip);
     }
+
+    public List<Trip> getTripsBelowASpecificPrice(Double price) {
+        return tripRepository.findByPriceLessThan(price);
+    }
 }

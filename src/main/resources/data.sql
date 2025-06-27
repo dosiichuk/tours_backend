@@ -14,7 +14,7 @@
 -- SET FOREIGN_KEY_CHECKS = 1;
 
 -- Users
-INSERT INTO `user` (email, password, first_name, last_name, role) VALUES ('admin@example.com', 'adminpass', 'Admin', 'User', 'ADMIN');
+INSERT INTO `user` (email, password, first_name, last_name, role) VALUES ('de99887711@gmail.com', 'adminpass', 'Admin', 'User', 'ADMIN');
 INSERT INTO `user` (email, password, first_name, last_name, role) VALUES ('user@example.com', 'userpass', 'Regular', 'User', 'USER');
 INSERT INTO `user` (email, password, first_name, last_name, role) VALUES ('manager@example.com', 'managerpass', 'Manager', 'Boss', 'USER');
 
@@ -49,7 +49,7 @@ INSERT INTO hotel_amenity (hotel_id, amenity_id) VALUES (3, 3);
 -- Trips
 INSERT INTO trip (title, description, price, start_date, end_date) VALUES ('Paris Getaway', 'A trip to Paris', 999.99, '2025-07-01', '2025-07-07');
 INSERT INTO trip (title, description, price, start_date, end_date) VALUES ('London Adventure', 'Explore London', 799.99, '2025-08-10', '2025-08-17');
-INSERT INTO trip (title, description, price, start_date, end_date) VALUES ('Rome Discovery', 'Discover Rome', 899.99, '2025-09-05', '2025-09-12');
+INSERT INTO trip (title, description, price, start_date, end_date) VALUES ('Rome Discovery', 'Discover Rome', 699.99, '2025-09-05', '2025-09-12');
 
 -- Hotel-Trip join table
 INSERT INTO hotel_trip (hotel_id, trip_id) VALUES (1, 1);
