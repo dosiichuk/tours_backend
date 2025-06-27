@@ -23,7 +23,7 @@ import com.tours.backend.services.UserService;
 import org.springframework.http.MediaType;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -44,11 +44,9 @@ public class UserController {
         return ResponseEntity.ok(userMapper.mapToDto(user));
     }
 
-    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> registerUser(@RequestBody NewUserDto newUser) throws UserAlreadyExistsException {
-        System.out.println("Registering new user: " + newUser);
         User createdUser = userService.createUser(userMapper.mapNewUserDtoToUserEntity(newUser));
-        System.out.println("Created user: " + createdUser);
         return ResponseEntity.ok(userMapper.mapToDto(createdUser));
     }
     

@@ -25,5 +25,10 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>("Trip with a given ID not found", HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleReservationNotFoundException(Exception exception) {
+        return new ResponseEntity<>("Reservation with a given ID not found", HttpStatus.NOT_FOUND);
+    }
+
 
 }

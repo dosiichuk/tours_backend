@@ -16,3 +16,10 @@ spring:
   sql:
     init:
       mode: always
+
+weather:
+  api:
+    key: ae216032eff24ef68f5125541252706
+    url:
+      current: https://api.weatherapi.com/v1/current.json
+      forecast: https://api.weatherapi.com/v1/forecast.json

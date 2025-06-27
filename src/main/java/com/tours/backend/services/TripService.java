@@ -36,7 +36,8 @@ public class TripService {
         trip.setPrice(tripDetails.getPrice());
         trip.setStartDate(tripDetails.getStartDate());
         trip.setEndDate(tripDetails.getEndDate());
-        return tripRepository.save(trip);
+        tripRepository.save(trip);
+        return trip;
     }
 
     public void deleteTrip(Long id) throws TripNotFoundException {
