@@ -2,12 +2,15 @@ package com.tours.backend.scheduler;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.tours.backend.domain.User;
 import com.tours.backend.domain.Mail;
 import com.tours.backend.domain.Trip;
+import com.tours.backend.services.AuditService;
 import com.tours.backend.services.EmailService;
 import com.tours.backend.services.TripService;
 import com.tours.backend.services.UserService;
@@ -22,6 +25,9 @@ public class HotTripsEmailScheduler {
     private final EmailService emailService;
     private final UserService userService;
     private final TripService tripService;
+
+    @Autowired
+    private AuditService auditService;
 
     // @Scheduled(fixedRate = 10000)
     @Scheduled(cron = "0 0 9 * * ?")
@@ -39,7 +45,9 @@ public class HotTripsEmailScheduler {
                     .toCc(null)
                     .build();
             emailService.sendEmail(mail);
+            auditService.auditEmailSent(user.getId(), user.getEmail(), SUBJECT, message);
         });
+
     }
 
     private String getHotTripsMessageForUser(User user, List<Trip> hotTrips) {

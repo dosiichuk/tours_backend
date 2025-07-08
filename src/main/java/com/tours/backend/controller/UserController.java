@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.tours.backend.domain.User;
 import com.tours.backend.domain.dtos.NewUserDto;
 import com.tours.backend.domain.dtos.UserDto;
 import com.tours.backend.mapper.UserMapper;
+import com.tours.backend.services.AuditService;
 import com.tours.backend.services.UserService;
 
 import org.springframework.http.MediaType;
@@ -25,12 +27,14 @@ import org.springframework.http.MediaType;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-
     @Autowired
     private UserService userService;
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private AuditService auditService;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
@@ -52,7 +56,11 @@ public class UserController {
     
 
     @PostMapping("/login")
-    public ResponseEntity<String> login() {
+    public ResponseEntity<String> login(@RequestBody UserDto user) throws UserNotFoundException {
+        User existingUser = userService.getUserById(user.getId());
+        if (existingUser != null) {
+            auditService.auditUserLogin(existingUser.getId(), existingUser.getEmail());
+        }        
         return ResponseEntity.ok("Login successful for user: ");
     }
 
