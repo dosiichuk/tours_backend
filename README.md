@@ -16,6 +16,7 @@ This project is a **tourist agency application** built with a **Spring Boot** ba
 - [Design Patterns](#design-patterns)
 - [Testing](#testing)
 - [Frontend](#frontend)
+- [Scheduler](#scheduler)
 
 ---
 
@@ -123,6 +124,12 @@ This project is a **tourist agency application** built with a **Spring Boot** ba
   - View the list of trips.
   - Register a new user at `/app/register`.
   - Book a trip at `/app/book` by selecting a trip and a user.
+
+---
+
+## Scheduler
+
+There is also an application of a Scheduler, which sends emails to users regarding trips cheaper than $700 every day at 9:00 AM, as specified by `@Scheduled(cron = "0 0 9 * * ?")` in the backend.
 
 ---
 

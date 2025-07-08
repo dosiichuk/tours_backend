@@ -1,12 +1,5 @@
 -- Create audit tables
 
-CREATE TABLE user_login_audit (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT,
-    email VARCHAR(255),
-    login_time DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE user_audit (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     event_type VARCHAR(10),
@@ -61,7 +54,7 @@ CREATE TABLE error_audit (
 -- Triggers for user entity
 DELIMITER $$
 CREATE TRIGGER user_after_insert
-AFTER INSERT ON user FOR EACH ROW
+AFTER INSERT ON users FOR EACH ROW
 BEGIN
     INSERT INTO user_audit (event_type, new_data)
     VALUES ('INSERT', JSON_OBJECT(
@@ -76,7 +69,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE TRIGGER user_after_update
-AFTER UPDATE ON user FOR EACH ROW
+AFTER UPDATE ON users FOR EACH ROW
 BEGIN
     INSERT INTO user_audit (event_type, old_data, new_data)
     VALUES ('UPDATE',
@@ -100,7 +93,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE TRIGGER user_after_delete
-AFTER DELETE ON user FOR EACH ROW
+AFTER DELETE ON users FOR EACH ROW
 BEGIN
     INSERT INTO user_audit (event_type, old_data)
     VALUES ('DELETE', JSON_OBJECT(
