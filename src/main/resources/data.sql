@@ -1,22 +1,22 @@
 
--- SET FOREIGN_KEY_CHECKS = 0;
--- TRUNCATE TABLE review;
--- TRUNCATE TABLE flight;
--- TRUNCATE TABLE reservation;
--- TRUNCATE TABLE hotel_trip;
--- TRUNCATE TABLE trip;
--- TRUNCATE TABLE hotel_amenity;
--- TRUNCATE TABLE hotel;
--- TRUNCATE TABLE location;
--- TRUNCATE TABLE weather;
--- TRUNCATE TABLE amenity;
--- TRUNCATE TABLE user;
--- SET FOREIGN_KEY_CHECKS = 1;
+--  SET FOREIGN_KEY_CHECKS = 0;
+--  TRUNCATE TABLE review;
+--  TRUNCATE TABLE flight;
+--  TRUNCATE TABLE reservation;
+--  TRUNCATE TABLE hotel_trip;
+--  TRUNCATE TABLE trip;
+--  TRUNCATE TABLE hotel_amenity;
+--  TRUNCATE TABLE hotel;
+--  TRUNCATE TABLE location;
+--  TRUNCATE TABLE weather;
+--  TRUNCATE TABLE amenity;
+--  TRUNCATE TABLE user;
+--  SET FOREIGN_KEY_CHECKS = 1;
 
 -- Users
-INSERT INTO `user` (email, password, first_name, last_name, role) VALUES ('de99887711@gmail.com', 'adminpass', 'Admin', 'User', 'ADMIN');
-INSERT INTO `user` (email, password, first_name, last_name, role) VALUES ('user@example.com', 'userpass', 'Regular', 'User', 'USER');
-INSERT INTO `user` (email, password, first_name, last_name, role) VALUES ('manager@example.com', 'managerpass', 'Manager', 'Boss', 'USER');
+INSERT INTO `users` (email, password, first_name, last_name, role) VALUES ('de99887711@gmail.com', 'adminpass', 'Admin', 'User', 'ADMIN');
+INSERT INTO `users` (email, password, first_name, last_name, role) VALUES ('user@example.com', 'userpass', 'Regular', 'User', 'USER');
+INSERT INTO `users` (email, password, first_name, last_name, role) VALUES ('manager@example.com', 'managerpass', 'Manager', 'Boss', 'USER');
 
 -- Amenities
 INSERT INTO amenity (name, description) VALUES ('WiFi', 'Free wireless internet');
